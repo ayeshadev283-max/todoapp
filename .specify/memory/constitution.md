@@ -1,55 +1,170 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Todo Application Constitution
+<!--
+  Sync Impact Report:
+  Version: 1.0.0 (Initial Release)
+  Modified Principles: N/A (new constitution)
+  Added Sections: All sections (initial creation)
+  Removed Sections: None
+  Templates Requiring Updates:
+    ✅ .specify/templates/plan-template.md - compatible (generic constitution check)
+    ✅ .specify/templates/spec-template.md - compatible (no changes needed)
+    ✅ .specify/templates/tasks-template.md - compatible (no changes needed)
+  Follow-up TODOs: None
+-->
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Specification as Source of Truth (NON-NEGOTIABLE)
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+**MUST** write and approve specification before any code implementation. No code may be written without a corresponding approved specification document. This ensures clear requirements and prevents scope creep or misalignment.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+**Rationale**: Specifications provide a single source of truth that aligns all stakeholders on requirements before investment in implementation. Changes to specifications require explicit approval and versioning.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### II. Accuracy & Implementation Fidelity (NON-NEGOTIABLE)
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+Implementation **MUST** exactly match specifications with zero deviation. Any discovered need for deviation requires specification update and re-approval before proceeding.
 
-### [PRINCIPLE_6_NAME]
+**Rationale**: Ensures predictability and trust in the development process. Prevents "creative interpretation" that leads to mismatched expectations.
 
+### III. Reproducibility & Documentation
 
-[PRINCIPLE__DESCRIPTION]
+Project **MUST** run successfully using only documented steps. No undocumented dependencies, configurations, or "tribal knowledge" permitted.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+**Requirements**:
+- Complete setup instructions in documentation
+- All dependencies explicitly declared
+- Environment setup fully scripted or documented
+- No manual configuration steps unless documented
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+**Rationale**: Enables new team members to onboard quickly, ensures consistent environments, and prevents "works on my machine" issues.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### IV. Clean Code Standards (NON-NEGOTIABLE)
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+Code **MUST** adhere to clean code principles:
+- **Readable**: Self-documenting with clear names and structure
+- **Modular**: Separated concerns with single-responsibility functions/classes
+- **Single Responsibility**: Each component has one clear purpose
+- **Minimal Complexity**: Simplest solution that meets requirements
+
+**Rationale**: Clean code reduces maintenance burden, improves collaboration, and minimizes bugs.
+
+### V. Mandatory Workflow Sequence (NON-NEGOTIABLE)
+
+Development **MUST** follow this exact sequence without skipping steps:
+
+1. **Specification** → Write complete spec.md
+2. **Planning** → Generate implementation plan.md
+3. **Task Breakdown** → Create tasks.md with testable tasks
+4. **Implementation** → Execute using Claude Code
+
+**Rationale**: Each step builds on the previous, ensuring thorough thinking before coding. Skipping steps leads to rework and technical debt.
+
+## Functional Scope
+
+### Mandatory Features
+
+The application **MUST** support all five core features without exception:
+
+1. **Add Todo** - Create new todo items
+2. **View Todos** - List all todos with status visibility
+3. **Update Todo** - Modify existing todo content
+4. **Delete Todo** - Remove todos from the list
+5. **Mark Complete/Incomplete** - Toggle todo completion status
+
+### Data Requirements
+
+- Each todo **MUST** have a unique ID (auto-generated)
+- Data storage is in-memory only (no persistence)
+- Status (complete/incomplete) **MUST** be visible in all listings
+- No database, file system, or external storage permitted
+
+**Rationale**: Defines exact scope to prevent feature creep and ensures MVP clarity.
+
+## Technical Constraints
+
+### Technology Stack (MANDATORY)
+
+- **Language**: Python 3.13 or higher - **MUST** be verified before implementation
+- **Application Type**: Console/CLI only - no GUI, web, or network interfaces
+- **Dependency Management**: UV - **MUST** be used for all dependency management
+- **Prohibited Features**:
+  - No file persistence or database
+  - No network communication
+  - No external service integrations
+  - No GUI frameworks
+
+**Rationale**: Constraints ensure focus on core functionality and prevent over-engineering. Python 3.13+ provides modern language features and UV ensures reproducible dependency management.
+
+### Code Quality Requirements
+
+- Follow PEP 8 style guidelines
+- Type hints required for all function signatures
+- Docstrings for all public functions and classes
+- Maximum function length: 50 lines (exceptions require justification)
+- Maximum cyclomatic complexity: 10 (exceptions require justification)
+
+## Development Workflow
+
+### Spec-Driven Development Process
+
+1. **Specification Phase**
+   - Use `/sp.specify` command to create spec.md
+   - Spec must include user stories, requirements, and success criteria
+   - Requires explicit approval before proceeding
+
+2. **Planning Phase**
+   - Use `/sp.plan` command to generate plan.md
+   - Must include architecture, technical context, and structure decisions
+   - Constitution Check gate must pass
+
+3. **Task Breakdown Phase**
+   - Use `/sp.tasks` command to create tasks.md
+   - Tasks must be testable, specific, and include exact file paths
+   - Dependencies must be explicit
+
+4. **Implementation Phase**
+   - Use `/sp.implement` command to execute tasks
+   - Follow TDD if tests are included
+   - Commit after each logical task completion
+
+### Quality Gates
+
+- **Gate 1 (Pre-Planning)**: Specification approved and complete
+- **Gate 2 (Pre-Tasks)**: Implementation plan passes Constitution Check
+- **Gate 3 (Pre-Implementation)**: Tasks are concrete with clear acceptance criteria
+- **Gate 4 (Post-Implementation)**: All acceptance criteria met and verified
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+### Constitution Authority
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+This constitution supersedes all other development practices and guidelines. When conflict arises between this document and any other guidance, this constitution takes precedence.
+
+### Amendment Process
+
+1. Amendments require documented justification
+2. All changes must be versioned using semantic versioning
+3. Impact analysis required on dependent templates and artifacts
+4. Approval required before amendments take effect
+5. Migration plan required for breaking changes
+
+### Compliance
+
+- All pull requests must verify compliance with this constitution
+- Code reviews must check adherence to principles
+- Any complexity or deviation must be explicitly justified in plan.md
+- Violations require either remediation or formal amendment
+
+### Version Control
+
+- Constitution changes trigger version increment
+- Templates (spec, plan, tasks) must remain compatible
+- Breaking changes require MAJOR version bump
+- New sections/principles require MINOR version bump
+- Clarifications/fixes require PATCH version bump
+
+### Runtime Development Guidance
+
+For agent-specific operational guidelines, refer to `CLAUDE.md` which provides execution-level instructions that complement these constitutional principles.
+
+**Version**: 1.0.0 | **Ratified**: 2025-12-31 | **Last Amended**: 2025-12-31
