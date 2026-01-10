@@ -22,7 +22,7 @@ This document breaks down the Phase 2 implementation into 185 atomic, testable t
 
 ## Progress Tracking
 
-**Overall Progress**: 73/185 tasks complete (39.5%)
+**Overall Progress**: 91/185 tasks complete (49.2%)
 
 ### Phase Completion
 
@@ -31,7 +31,7 @@ This document breaks down the Phase 2 implementation into 185 atomic, testable t
 - [X] Phase 3: Backend Authentication (16 tasks) ✅ COMPLETE
 - [X] Phase 4: Backend Task API (18 tasks) ✅ COMPLETE
 - [X] Phase 5: Backend Testing (12 tasks) ✅ COMPLETE
-- [ ] Phase 6: Frontend Authentication (18 tasks)
+- [X] Phase 6: Frontend Authentication (18 tasks) ✅ COMPLETE
 - [ ] Phase 7: Frontend Task UI (22 tasks)
 - [ ] Phase 8: Responsive Design (15 tasks)
 - [ ] Phase 9: Integration Testing (14 tasks)
@@ -187,24 +187,24 @@ This document breaks down the Phase 2 implementation into 185 atomic, testable t
 
 ### Frontend Auth Setup Tasks
 
-- [ ] T074 Install Better Auth: `npm install better-auth` in frontend directory
-- [ ] T075 Install Zod for validation: `npm install zod`
-- [ ] T076 Create `frontend/lib/auth.ts` - configure Better Auth client with baseURL pointing to backend (http://localhost:8000)
-- [ ] T077 Create `frontend/lib/api.ts` - implement `getAuthToken()` function to retrieve JWT from Better Auth session
-- [ ] T078 In api.ts: implement `apiFetch(endpoint, options)` wrapper around fetch that injects Authorization header with JWT
-- [ ] T079 Create `frontend/lib/types.ts` - define TypeScript interfaces: User {id, email}, Task {id, user_id, title, description, completed, created_at, updated_at}, LoginResponse, SignupResponse
-- [ ] T080 Create `frontend/lib/validation.ts` - define Zod schemas: loginSchema (email + password), signupSchema (email + password with min 8 chars), taskSchema (title 1-200, description optional max 1000)
-- [ ] T081 Create `frontend/app/layout.tsx` - wrap children with Better Auth provider, add global styles, add viewport meta for responsive
-- [ ] T082 Create `frontend/components/AuthGuard.tsx` - check if user authenticated with useSession from Better Auth, redirect to /login if not
-- [ ] T083 Create `frontend/app/login/page.tsx` - implement login form with email and password inputs
-- [ ] T084 In login page: use Zod to validate form inputs, show validation errors below fields, call backend POST /api/auth/login on submit
-- [ ] T085 In login page: store JWT in Better Auth session on success, redirect to /tasks, show error toast if login fails (401 or network error)
-- [ ] T086 Create `frontend/app/signup/page.tsx` - implement signup form similar to login (email, password, confirm password)
-- [ ] T087 In signup page: validate password match, call POST /api/auth/signup, store JWT on success, redirect to /tasks
-- [ ] T088 Add Tailwind styling to login/signup forms: centered card, rounded corners, shadow, button hover states, focus states on inputs
-- [ ] T089 Add loading state to forms: disable submit button and show spinner during API call
-- [ ] T090 Add link from login page to signup ("Don't have an account? Sign up") and vice versa
-- [ ] T091 Test signup flow in browser: create new user, verify redirect to /tasks, check JWT in Better Auth session storage (dev tools)
+- [x] T074 Install Better Auth: `npm install better-auth` in frontend directory
+- [x] T075 Install Zod for validation: `npm install zod`
+- [x] T076 Create `frontend/lib/auth.ts` - configure Better Auth client with baseURL pointing to backend (http://localhost:8000)
+- [x] T077 Create `frontend/lib/api.ts` - implement `getAuthToken()` function to retrieve JWT from Better Auth session
+- [x] T078 In api.ts: implement `apiFetch(endpoint, options)` wrapper around fetch that injects Authorization header with JWT
+- [x] T079 Create `frontend/lib/types.ts` - define TypeScript interfaces: User {id, email}, Task {id, user_id, title, description, completed, created_at, updated_at}, LoginResponse, SignupResponse
+- [x] T080 Create `frontend/lib/validation.ts` - define Zod schemas: loginSchema (email + password), signupSchema (email + password with min 8 chars), taskSchema (title 1-200, description optional max 1000)
+- [x] T081 Create `frontend/app/layout.tsx` - wrap children with Better Auth provider, add global styles, add viewport meta for responsive
+- [x] T082 Create `frontend/components/AuthGuard.tsx` - check if user authenticated with useSession from Better Auth, redirect to /login if not
+- [x] T083 Create `frontend/app/login/page.tsx` - implement login form with email and password inputs
+- [x] T084 In login page: use Zod to validate form inputs, show validation errors below fields, call backend POST /api/auth/login on submit
+- [x] T085 In login page: store JWT in Better Auth session on success, redirect to /tasks, show error toast if login fails (401 or network error)
+- [x] T086 Create `frontend/app/signup/page.tsx` - implement signup form similar to login (email, password, confirm password)
+- [x] T087 In signup page: validate password match, call POST /api/auth/signup, store JWT on success, redirect to /tasks
+- [x] T088 Add Tailwind styling to login/signup forms: centered card, rounded corners, shadow, button hover states, focus states on inputs
+- [x] T089 Add loading state to forms: disable submit button and show spinner during API call
+- [x] T090 Add link from login page to signup ("Don't have an account? Sign up") and vice versa
+- [x] T091 Test signup flow in browser: create new user, verify redirect to /tasks, check JWT in Better Auth session storage (dev tools)
 
 **Checkpoint**: Authentication UI complete, users can sign up and log in
 
