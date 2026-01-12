@@ -17,6 +17,7 @@ router = APIRouter(prefix="/api/tasks", tags=["Tasks"])
 # Request/Response Models
 class TaskCreate(BaseModel):
     """Request model for creating a task."""
+
     title: str
     description: Optional[str] = None
 
@@ -42,6 +43,7 @@ class TaskCreate(BaseModel):
 
 class TaskUpdate(BaseModel):
     """Request model for updating a task."""
+
     title: Optional[str] = None
     description: Optional[str] = None
 
@@ -68,6 +70,7 @@ class TaskUpdate(BaseModel):
 
 class TaskResponse(BaseModel):
     """Response model for a single task."""
+
     id: int
     user_id: str
     title: str
@@ -82,6 +85,7 @@ class TaskResponse(BaseModel):
 
 class TaskListResponse(BaseModel):
     """Response model for task list with count."""
+
     tasks: List[TaskResponse]
     total: int
 
@@ -90,7 +94,7 @@ class TaskListResponse(BaseModel):
 def get_tasks(
     completed: Optional[bool] = None,
     user_id: str = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ) -> TaskListResponse:
     """
     Get all tasks for the authenticated user.
@@ -118,17 +122,14 @@ def get_tasks(
     # Convert to response models
     task_responses = [TaskResponse.model_validate(task) for task in tasks]
 
-    return TaskListResponse(
-        tasks=task_responses,
-        total=len(task_responses)
-    )
+    return TaskListResponse(tasks=task_responses, total=len(task_responses))
 
 
 @router.post("", response_model=TaskResponse, status_code=status.HTTP_201_CREATED)
 def create_task(
     request: TaskCreate,
     user_id: str = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ) -> TaskResponse:
     """
     Create a new task for the authenticated user.
@@ -151,7 +152,7 @@ def create_task(
         description=request.description,
         completed=False,
         created_at=datetime.utcnow(),
-        updated_at=datetime.utcnow()
+        updated_at=datetime.utcnow(),
     )
 
     db.add(task)
@@ -165,7 +166,7 @@ def create_task(
 def get_task(
     task_id: int,
     user_id: str = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ) -> TaskResponse:
     """
     Get a specific task by ID.
@@ -187,15 +188,14 @@ def get_task(
 
     if not task:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Task not found"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Task not found"
         )
 
     # Verify ownership
     if task.user_id != user_id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not authorized to access this task"
+            detail="Not authorized to access this task",
         )
 
     return TaskResponse.model_validate(task)
@@ -206,7 +206,7 @@ def update_task(
     task_id: int,
     request: TaskUpdate,
     user_id: str = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ) -> TaskResponse:
     """
     Update a task's title and/or description.
@@ -230,15 +230,14 @@ def update_task(
 
     if not task:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Task not found"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Task not found"
         )
 
     # Verify ownership
     if task.user_id != user_id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not authorized to modify this task"
+            detail="Not authorized to modify this task",
         )
 
     # Update fields if provided
@@ -260,7 +259,7 @@ def update_task(
 def delete_task(
     task_id: int,
     user_id: str = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ) -> None:
     """
     Delete a task.
@@ -282,15 +281,14 @@ def delete_task(
 
     if not task:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Task not found"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Task not found"
         )
 
     # Verify ownership
     if task.user_id != user_id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not authorized to delete this task"
+            detail="Not authorized to delete this task",
         )
 
     db.delete(task)
@@ -301,7 +299,7 @@ def delete_task(
 def toggle_task_complete(
     task_id: int,
     user_id: str = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ) -> TaskResponse:
     """
     Toggle a task's completion status.
@@ -323,15 +321,14 @@ def toggle_task_complete(
 
     if not task:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Task not found"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Task not found"
         )
 
     # Verify ownership
     if task.user_id != user_id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not authorized to modify this task"
+            detail="Not authorized to modify this task",
         )
 
     # Toggle completion

@@ -3,6 +3,7 @@
 import os
 import sys
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 # Load environment variables from .env file in project root
@@ -12,7 +13,7 @@ load_dotenv(dotenv_path=env_path)
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routes import auth, tasks
+from app.routes import auth, health, tasks
 
 # Environment variable validation at startup
 BETTER_AUTH_SECRET = os.getenv("BETTER_AUTH_SECRET")
@@ -29,7 +30,7 @@ if not DATABASE_URL:
 app = FastAPI(
     title="Todo API",
     description="Multi-user todo application API with JWT authentication",
-    version="2.0.0"
+    version="2.0.0",
 )
 
 # CORS configuration
@@ -45,13 +46,10 @@ app.add_middleware(
 # Include routers
 app.include_router(auth.router)
 app.include_router(tasks.router)
+app.include_router(health.router)
+
 
 @app.get("/")
 def read_root():
     """Root endpoint - API health check."""
     return {"message": "Todo API v2.0", "status": "healthy"}
-
-@app.get("/health")
-def health_check():
-    """Health check endpoint for monitoring."""
-    return {"status": "healthy", "database": "connected" if DATABASE_URL else "not_configured"}

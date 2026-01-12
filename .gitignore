@@ -53,3 +53,15 @@ htmlcov/
 
 # UV
 .uv/
+
+# Node.js / Next.js
+node_modules/
+.next/
+out/
+.vercel/
+next-env.d.ts
+*.tsbuildinfo
+
+# TypeScript
+dist/
+*.js.map

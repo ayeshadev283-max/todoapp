@@ -212,6 +212,8 @@ See `.specify/memory/constitution.md` for code quality, testing, performance, se
 ## Active Technologies
 - Python 3.13+ + Standard library only (no external frameworks) (001-todo-app)
 - In-memory only (Python dict/list structures) (001-todo-app)
+- Python 3.13+ + Python standard library only (no external frameworks) (001-fullstack-web-app)
+- In-memory using Python dict for task storage (001-fullstack-web-app)
 
 ## Recent Changes
 - 001-todo-app: Added Python 3.13+ + Standard library only (no external frameworks)

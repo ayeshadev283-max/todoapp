@@ -1,3 +1,13 @@
+---
+title: Todo API Backend
+emoji: ✅
+colorFrom: purple
+colorTo: pink
+sdk: docker
+pinned: false
+license: mit
+---
+
 # Backend - FastAPI Todo Application
 
 Multi-user todo application backend built with FastAPI, SQLModel, and PostgreSQL.
