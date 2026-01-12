@@ -4,8 +4,8 @@ const nextConfig: NextConfig = {
   // Enable static export for GitHub Pages
   output: 'export',
 
-  // No basePath needed for user/org site (ayeshadev283-max.github.io)
-  basePath: '',
+  // basePath for project site (ayeshadev283-max.github.io/todoapp)
+  basePath: '/todoapp',
 
   // Disable image optimization for static export
   images: {
