@@ -11,10 +11,11 @@ import type { Task } from "@/lib/types";
 interface TaskListProps {
   tasks: Task[];
   onUpdate: () => void;
+  onEdit: (task: Task) => void;
   filter: "all" | "active" | "completed";
 }
 
-export function TaskList({ tasks, onUpdate, filter }: TaskListProps) {
+export function TaskList({ tasks, onUpdate, onEdit, filter }: TaskListProps) {
   const router = useRouter();
 
   if (tasks.length === 0) {
@@ -100,7 +101,7 @@ export function TaskList({ tasks, onUpdate, filter }: TaskListProps) {
   return (
     <div className="space-y-4">
       {tasks.map((task) => (
-        <TaskItem key={task.id} task={task} onUpdate={onUpdate} />
+        <TaskItem key={task.id} task={task} onUpdate={onUpdate} onEdit={onEdit} />
       ))}
     </div>
   );

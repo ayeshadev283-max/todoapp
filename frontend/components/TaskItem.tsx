@@ -5,7 +5,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { apiFetch } from "@/lib/api";
 import type { Task } from "@/lib/types";
@@ -13,10 +12,10 @@ import type { Task } from "@/lib/types";
 interface TaskItemProps {
   task: Task;
   onUpdate: () => void;
+  onEdit: (task: Task) => void;
 }
 
-export function TaskItem({ task, onUpdate }: TaskItemProps) {
-  const router = useRouter();
+export function TaskItem({ task, onUpdate, onEdit }: TaskItemProps) {
   const [isTogglingComplete, setIsTogglingComplete] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -56,7 +55,7 @@ export function TaskItem({ task, onUpdate }: TaskItemProps) {
   };
 
   const handleEdit = () => {
-    router.push(`/tasks/${task.id}`);
+    onEdit(task);
   };
 
   const formattedDate = new Date(task.created_at).toLocaleDateString("en-US", {

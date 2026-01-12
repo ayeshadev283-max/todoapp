@@ -9,8 +9,9 @@ import { useRouter } from "next/navigation";
 import { AuthGuard } from "@/components/AuthGuard";
 import { AppLayout } from "@/components/AppLayout";
 import { TaskList } from "@/components/TaskList";
+import { EditTaskModal } from "@/components/EditTaskModal";
 import { apiFetch } from "@/lib/api";
-import type { TaskListResponse } from "@/lib/types";
+import type { TaskListResponse, Task } from "@/lib/types";
 
 type FilterType = "all" | "active" | "completed";
 
@@ -20,6 +21,7 @@ export default function TasksPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string>("");
   const [filter, setFilter] = useState<FilterType>("all");
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
 
   const fetchTasks = async () => {
     setIsLoading(true);
@@ -208,9 +210,24 @@ export default function TasksPage() {
               ))}
             </div>
           ) : (
-            <TaskList tasks={filteredTasks} onUpdate={fetchTasks} filter={filter} />
+            <TaskList
+              tasks={filteredTasks}
+              onUpdate={fetchTasks}
+              onEdit={setEditingTask}
+              filter={filter}
+            />
           )}
         </div>
+
+        {/* Edit Task Modal */}
+        {editingTask && (
+          <EditTaskModal
+            task={editingTask}
+            isOpen={true}
+            onClose={() => setEditingTask(null)}
+            onUpdate={fetchTasks}
+          />
+        )}
       </AppLayout>
     </AuthGuard>
   );
